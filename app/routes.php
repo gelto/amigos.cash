@@ -11,7 +11,32 @@
 |
 */
 
-Route::get('/', function()
+Route::get('/', array('uses'=>'InicioController@inicio'));
+Route::get('/bienvenido', array('before' => 'logeado', 'uses'=>'InicioController@bienvenido'));
+
+// *********** //
+// ** LOGEO ** //
+// *********** //
+
+Route::filter('logeado', function()
 {
-	return View::make('hello');
+    if ( ! Sentry::check())
+    {
+        return Redirect::to('/');
+    }
 });
+
+Route::get('/logout', function()
+{
+    if ( Sentry::check())
+    {
+        Sentry::logout();
+    }
+    
+    return Redirect::to('/');
+});
+
+// *************** //
+// ** LOGEO FIN ** //
+// *************** //
+
