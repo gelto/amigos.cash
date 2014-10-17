@@ -26,6 +26,8 @@ Route::filter('logeado', function()
     }
 });
 
+Route::get('/login', array('uses'=>'InicioController@login'));
+
 Route::get('/logout', function()
 {
     if ( Sentry::check())
@@ -35,6 +37,9 @@ Route::get('/logout', function()
     
     return Redirect::to('/');
 });
+
+Route::post('/registro', array('uses' => 'InicioController@registro'));
+Route::get('/validacion/{codigo?}', array('uses' => 'InicioController@validacion'));
 
 // *************** //
 // ** LOGEO FIN ** //
