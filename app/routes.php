@@ -27,6 +27,7 @@ Route::filter('logeado', function()
 });
 
 Route::get('/login', array('uses'=>'InicioController@login'));
+Route::post('/loginback', array('uses'=>'InicioController@loginback'));
 
 Route::get('/logout', function()
 {
@@ -45,3 +46,12 @@ Route::get('/validacion/{codigo?}', array('uses' => 'InicioController@validacion
 // ** LOGEO FIN ** //
 // *************** //
 
+// ************* //
+// ** CUENTAS ** //
+// ************* //
+
+Route::get('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabierta'));
+
+// ***************** //
+// ** CUENTAS FIN ** //
+// ***************** //

@@ -9,6 +9,12 @@
      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
     <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
   </ul>
+  <section class="top-bar-section">
+    <!-- Right Nav Section -->
+    <ul class="right">
+      <li class="active"><a href="logout">Logut</a></li>
+    </ul>
+  </section>
 </nav>
 
 <br><br><br>
@@ -16,23 +22,39 @@
 <div class="row">
     <div class="large-4 columns">&nbsp;</div>
     <div class="large-4 columns">
-        <h3>Inicio de Sesión</h3>
+        <h3>Cuenta abierta</h3>
     </div>
     <div class="large-4 columns">&nbsp;</div>
 </div>
 
-<form action="/loginback" method='post'>    
+<form action="/nuevacuentaabierta" method='post'>    
     <div class="row">
         <div class="large-4 columns">&nbsp;</div>
         <div class="large-4 columns">
-            <input type="email" name='email' placeholder="Email" required>
+            <input type="text" name='nombredeamigo' placeholder="¿Cómo conoces a tu amigo?" required>
         </div>
         <div class="large-4 columns">&nbsp;</div>
     </div>
     <div class="row">
         <div class="large-4 columns">&nbsp;</div>
         <div class="large-4 columns">
-            <input type="password" name='pass' placeholder="Password" required>
+            <input type="email" name='emaildeamigo' placeholder="¿qué email conoces de tu amigo?" required>
+        </div>
+        <div class="large-4 columns">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="large-4 columns">&nbsp;</div>
+        <div class="large-4 columns">
+            <input type="number" name='cantidad' placeholder="Cantidad en pesos" required>
+        </div>
+        <div class="large-4 columns">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="large-4 columns">&nbsp;</div>
+        <div class="large-4 columns">
+            <label>¿Quién le debe a quién?</label>
+            <input type="radio" name="direccion_deuda" value="1" ><label for="pokemonRed">Yo presté</label>
+            <input type="radio" name="direccion_deuda" value="-1" ><label for="pokemonBlue">Me prestaron</label>
         </div>
         <div class="large-4 columns">&nbsp;</div>
     </div>
@@ -46,59 +68,12 @@
     <div class="row">
         <div class="large-4 columns">&nbsp;</div>
         <div class="large-4 columns">
-            <button class="small round button" type="submit">Entar</button>
+            <button class="small round button" type="submit">Guardar</button>
         </div>
         <div class="large-4 columns">&nbsp;</div>
     </div>
 </form>
 
-  <br><hr><br>
-
-<div class="row">
-    <div class="large-4 columns">&nbsp;</div>
-    <div class="large-4 columns">
-        <h3>Registro</h3>
-    </div>
-    <div class="large-4 columns">&nbsp;</div>
-</div>
-
-<form action="/registro" method='post'>    
-    <div class="row">
-        <div class="large-4 columns">&nbsp;</div>
-        <div class="large-4 columns">
-            <input type="text" name='name' placeholder="Nombre y apellido" required>
-        </div>
-        <div class="large-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="large-4 columns">&nbsp;</div>
-        <div class="large-4 columns">
-            <input type="email" name='email' placeholder="Email" required >
-        </div>
-        <div class="large-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="large-4 columns">&nbsp;</div>
-        <div class="large-4 columns">
-            <input type="password" name='pass' placeholder="Password" required>
-        </div>
-        <div class="large-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="large-4 columns">&nbsp;</div>
-        <div class="large-4 columns">
-            <div class='textoLogin'>&nbsp;<?php echo isset($_GET["error"]) ? "Usuario y/o Password incorrectos" :""; ?></div>
-        </div>
-        <div class="large-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="large-4 columns">&nbsp;</div>
-        <div class="large-4 columns">
-            <button class="small round button" type="submit">Registrarse</button>
-        </div>
-        <div class="large-4 columns">&nbsp;</div>
-    </div>
-</form>
 
 </div>
     	

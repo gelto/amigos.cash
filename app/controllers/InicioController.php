@@ -27,6 +27,25 @@ class InicioController extends BaseController {
 		return View::make('login');
 	}
 
+	public function loginback(){
+		$email = Input::get('email');
+		$password = Input::get('pass');
+
+		try{
+			$user = Sentry::findUserByCredentials(array(
+	        	'email'      => $email,
+	        	'password'	 => $password,
+	    	));
+			
+			Sentry::login($user, false);
+
+			return Redirect::to("/");
+
+		}catch(Exception $e){
+			echo $e->getMessage();
+		}
+	}
+
 	public function registro(){
 		$name = Input::get('name');
 		$email = Input::get('email');
@@ -80,6 +99,7 @@ class InicioController extends BaseController {
 		return Redirect::to("/");
 	}
 
+	// valida el código de registro
 	public function validacion($codigo)
 	{
 		// busca el codigo
@@ -98,6 +118,10 @@ class InicioController extends BaseController {
 		}
 		
 		return Redirect::to("/login");
+	}
+
+	public function bienvenido(){
+		return View::make('bienvenido');
 	}
 
 }
