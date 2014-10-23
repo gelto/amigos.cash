@@ -20,16 +20,16 @@
 <br>
 
 <div class="row">
-  <div class="medium-5 column">
+  <div class="small-5 column">
     <div class="panel">
       <h3>Cuentas abiertas: 0</h3>
       <div class="row">
-        <div class="medium-12 column">
+        <div class="small-12 column">
           <h5>Cuentas abiertas a favor</h5>
         </div>
       </div>
       <div class="row">
-        <div class="medium-12 column">
+        <div class="small-12 column">
           <h5>Cuentas abiertas donde debo</h5>
         </div>
       </div>
@@ -37,19 +37,19 @@
       <a href="/nuevacuentaabierta" class="small button">Nueva :)</a>
     </div>
   </div>
-  <div class="medium-2 column">
+  <div class="small-2 column">
     &nbsp;
   </div>
-  <div class="medium-5 column">
+  <div class="small-5 column">
     <div class="panel">
       <h3>Cuentas con interés: 0</h3>
       <div class="row">
-        <div class="medium-12 column">
+        <div class="small-12 column">
           <h5>Cuentas con interés a favor</h5>
         </div>
       </div>
       <div class="row">
-        <div class="medium-12 column">
+        <div class="small-12 column">
           <h5>Cuentas con interés donde debo</h5>
         </div>
       </div>

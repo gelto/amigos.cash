@@ -51,6 +51,7 @@ Route::get('/validacion/{codigo?}', array('uses' => 'InicioController@validacion
 // ************* //
 
 Route::get('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabierta'));
+Route::post('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabiertaback'));
 
 // ***************** //
 // ** CUENTAS FIN ** //
