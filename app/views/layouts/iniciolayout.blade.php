@@ -4,7 +4,6 @@
 <head>
     <title>Amigos Cash</title>
     <meta charset="utf-8">
-    <meta name = "format-detection" content = "telephone=no" />
     <link rel="icon" href="">
     <link rel="shortcut icon" href="" />
 
