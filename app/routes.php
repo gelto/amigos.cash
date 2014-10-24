@@ -56,3 +56,16 @@ Route::post('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasC
 // ***************** //
 // ** CUENTAS FIN ** //
 // ***************** //
+
+// ***************** //
+// ** EMAIL TESTS ** //
+// ***************** //
+
+Route::get("correo", function(){ 
+
+	return View::make('emails.usuarioBprueba')->with('email', "email@email.com");
+});
+
+// ********************* //
+// ** EMAIL TESTS FIN ** //
+// ********************* //

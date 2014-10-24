@@ -54,7 +54,7 @@
                                 <td width="528" style="line-height:0px;font-size:0px;">
                                     <table width="528" border="0" align="center" cellpadding="0" cellspacing="0">
                                         <tr>
-                                            <td width="528" height="40" align="left" style="font-family:Helvetica,Arial,Sans-serif;font-size:16px;line-height:18px;color:#0dbff2;"><strong>Hola</strong></td>
+                                            <td width="528" height="40" align="left" style="font-family:Helvetica,Arial,Sans-serif;font-size:16px;line-height:18px;color:#0dbff2;"><strong>Amigos Cash - La red social del pr&eacute;stamo entre amigos</strong></td>
                                         </tr>
                                         <tr>
                                             <td width="528" height="10" style="line-height:0px;font-size:0px;">
@@ -62,7 +62,25 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td width="528" height="40" style="font-family:Helvetica,Arial,Sans-serif;font-size:12px;line-height:16px;color:#000000;text-align:justify;">{{$mensaje}}</td>
+                                            <td width="528" height="40" style="font-family:Helvetica,Arial,Sans-serif;font-size:12px;line-height:16px;color:#000000;text-align:justify;">
+
+
+                                                Hola 
+                                                <br><br>
+                                                Tu amigo Germ&aacute;n Nava que te conoce como SENSEI ha registrado una deuda de $300 a su favor en nuestro sistema Amigos.Cash
+                                                <br><br>
+                                                Este mail es una forma de notificarte y no hace falta que hagas mas, pero...
+                                                <br><br>
+                                                Para facilitarle a tu amigo el control de esta deuda puedes confirmar que los datos son correctos en el siguiente enlace: <a href='www.amigos.cash/validacuentaabierta/'>CONFIRMAR</a>
+                                                <br><br>
+                                                O bien puedes regstrarte en <a href='www.amigos.cash'>Amigos.Cash</a> y administrar tus propias deudas a favor y "en contra"
+                                                <br><br>
+                                                Por último, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección de settings en el menú superior. 
+                                                <br>
+                                                Puedes vicular todas las cuentas de correo que el resto de tus amigos conozcan a tu cuenta principal.
+
+
+                                            </td>
                                         </tr>
                                         
                                         <tr>
