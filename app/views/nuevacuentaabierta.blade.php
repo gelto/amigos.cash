@@ -17,72 +17,60 @@
   </section>
 </nav>
 
-<br><br><br>
-
+    
 <div class="row">
-    <div class="small-4 columns">&nbsp;</div>
-    <div class="small-4 columns">
-        <h3>Cuenta abierta</h3>
+    <div class="large-4 columns">&nbsp;</div>
+    <div class="large-4 columns">
+        <form action="/nuevacuentaabierta" method='post'>
+            <div class="row">
+                <div class="small-12 columns">
+                    <h3>Nueva Cuenta abierta</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <input type="text" name='nombredeamigo' placeholder="¿Cómo le dices a tu amigo?" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <input type="email" name='emaildeamigo' placeholder="¿qué email conoces de tu amigo?" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <input type="number" name='cantidad' placeholder="Cantidad en pesos" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <textarea name="concepto" placeholder="Es importante que expliques el concepto del préstamo para recordarlo después ;)"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <label>¿Quién le debe a quién?</label>
+                    <input type="radio" name="direccion_deuda" value="1" ><label for="pokemonRed">Yo presté</label>
+                    <input type="radio" name="direccion_deuda" value="-1" ><label for="pokemonBlue">Me prestaron</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class='textoLogin'>&nbsp;<?php echo isset($_GET["error"]) ? "Usuario y/o Password incorrectos" :""; ?></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-2 columns">&nbsp;</div>
+                <div class="small-8 columns">
+                    <button class="large round button expand" type="submit">Guardar</button>
+                </div>
+                <div class="small-2 columns">&nbsp;</div>
+            </div>
+        </form>
     </div>
-    <div class="small-4 columns">&nbsp;</div>
+    <div class="large-4 columns">&nbsp;</div>
 </div>
 
-<form action="/nuevacuentaabierta" method='post'>    
-    <div class="row">
-        <div class="small-4 columns">&nbsp;</div>
-        <div class="small-4 columns">
-            <input type="text" name='nombredeamigo' placeholder="¿Cómo le dices a tu amigo?" required>
-        </div>
-        <div class="small-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="small-4 columns">&nbsp;</div>
-        <div class="small-4 columns">
-            <input type="email" name='emaildeamigo' placeholder="¿qué email conoces de tu amigo?" required>
-        </div>
-        <div class="small-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="small-4 columns">&nbsp;</div>
-        <div class="small-4 columns">
-            <input type="number" name='cantidad' placeholder="Cantidad en pesos" required>
-        </div>
-        <div class="small-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="small-4 columns">&nbsp;</div>
-        <div class="small-4 columns">
-            <textarea name="concepto" placeholder="Es importante que expliques el concepto del préstamo para recordarlo después ;)"></textarea>
-        </div>
-        <div class="small-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="small-4 columns">&nbsp;</div>
-        <div class="small-4 columns">
-            <label>¿Quién le debe a quién?</label>
-            <input type="radio" name="direccion_deuda" value="1" ><label for="pokemonRed">Yo presté</label>
-            <input type="radio" name="direccion_deuda" value="-1" ><label for="pokemonBlue">Me prestaron</label>
-        </div>
-        <div class="small-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="small-4 columns">&nbsp;</div>
-        <div class="small-4 columns">
-            <div class='textoLogin'>&nbsp;<?php echo isset($_GET["error"]) ? "Usuario y/o Password incorrectos" :""; ?></div>
-        </div>
-        <div class="small-4 columns">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="small-4 columns">&nbsp;</div>
-        <div class="small-4 columns">
-            <button class="small round button" type="submit">Guardar</button>
-        </div>
-        <div class="small-4 columns">&nbsp;</div>
-    </div>
-</form>
-
-
-</div>
     	
 @stop
 

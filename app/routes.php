@@ -26,8 +26,8 @@ Route::filter('logeado', function()
     }
 });
 
-Route::get('/login', array('uses'=>'InicioController@login'));
-Route::post('/loginback', array('uses'=>'InicioController@loginback'));
+Route::get('/login/{error?}', array('uses'=>'InicioController@login'));
+Route::post('/loginback', array('before' => 'csrf', 'uses'=>'InicioController@loginback'));
 
 Route::get('/logout', function()
 {
@@ -39,7 +39,7 @@ Route::get('/logout', function()
     return Redirect::to('/');
 });
 
-Route::post('/registro', array('uses' => 'InicioController@registro'));
+Route::post('/registro', array('before' => 'csrf', 'uses' => 'InicioController@registro'));
 Route::get('/validacion/{codigo?}', array('uses' => 'InicioController@validacion'));
 
 // *************** //
@@ -52,6 +52,9 @@ Route::get('/validacion/{codigo?}', array('uses' => 'InicioController@validacion
 
 Route::get('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabierta'));
 Route::post('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabiertaback'));
+
+Route::get('detallecuentaabierta/{id}', array('before' => 'logeado', 'uses'=>'CuentasController@detallecuentaabierta'));
+Route::post('agregaracuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@agregaracuentaabierta'));
 
 // ***************** //
 // ** CUENTAS FIN ** //

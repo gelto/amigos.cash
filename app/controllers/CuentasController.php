@@ -37,7 +37,10 @@ class CuentasController extends BaseController {
 	    	));
 		}catch(Exception $e){
 			$alternativeB = Alternativeemail::where('email', "=", $emaildeamigo)->get();
-			$userB = $alternativeB->usuario();
+			if(isset($alternativeB[0])){
+				$userB = $alternativeB[0]->usuario();	
+			}
+			
 		}
 		// si lo encuentra 
 		if(isset($userB->id)){
@@ -107,16 +110,30 @@ class CuentasController extends BaseController {
 			$favor = "su";
 			if($direccion_deuda == -1){
 				$favor = "tu";
-			}            
-            $data['mensaje'] = "Tu amigo ".$userA->first_name." que te conoce como ".$nombredeamigo." ha registrado una deuda de ".$cantidad." a ".$favor." favor en nuestro sistema Amigos.Cash<br><br>Este mail es una forma de notificarte y no hace falta que hagas mas<br><br>para facilitarle a tu amigo el control de esta deuda si deseas confirmar que la deuda es correcta puedes hacerlo en el siguiente enlace: <a href='www.amigos.cash/validacuentaabierta/".$nuevaCuenta->id."/".$nuevaCuenta->token."/".$userA->email."/".$userB->email."'>CONFIRMAR</a><br><br>O bien puedes regstrarte en: <a href='www.amigos.cash'>Amigos.Cash</a><br><br>Por último si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal puedes hacerlo en la sección de settings en el menú superior. Todas las cuentas que tengas quedarán vinculadas a tu mail principal"; 
+			}       
+			$data['mensaje'] = "Hola 
+                                <br><br>
+                                Tu amigo ".$userA->first_name." que te conoce como ".$nombredeamigo." ha registrado una deuda de $".$cantidad." a ".$favor." favor en nuestro sistema <a href='www.amigos.cash'>Amigos.Cash</a>
+                                <br><br>
+                                Este mail es una forma de notificarte y no hace falta que hagas mas, pero...
+                                <br><br>
+                                Para facilitarle a tu amigo el control de esta deuda puedes confirmar que los datos son correctos en el siguiente enlace: <a href='www.amigos.cash/validacuentaabierta/".$nuevaCuenta->id."/".$nuevaCuenta->token."/".$userA->email."/".$userB->email."'>CONFIRMAR</a>
+                                <br><br>
+                                O bien puedes regstrarte en <a href='www.amigos.cash'>Amigos.Cash</a> y administrar tus propias deudas a favor y 'en contra'
+                                <br><br>
+                                Por último, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección de settings en el menú superior. 
+                                <br>
+                                Puedes vicular todas las cuentas de correo que el resto de tus amigos conozcan a tu cuenta principal.";     
+
             $vista = 'emails.mensajegral';
             $email = $userB->email;
             $data['email'] = $email;
             $data['subject'] = $subject = 'Tu amigo ' . $userA->first_name . ' tiene un mensaje para ti';
+            $nombre = $nombredeamigo;
             
-            Mail::queue($vista, $data, function($message) use ($email, $subject)
+            Mail::queue($vista, $data, function($message) use ($email, $nombre, $subject)
             {
-                $message->to($email, 'Amigos Cash')->subject($subject);
+                $message->to($email, $nombre)->subject($subject);
             });
             // MAIL fin
 		}
@@ -125,26 +142,139 @@ class CuentasController extends BaseController {
 		// MAIL USER A
         $data=array();
         
-        $data['mensaje'] = "Tu cuenta abierta ha sido creada y/o actualizada en Amigos Cash. <br> El monto fue de $".($direccion_deuda*$cantidad)." con tu amigo ".$nombredeamigo.". Puedes checar todos los detalles en : <a href='www.amigos.cash'>Amigos.Cash</a>"; 
+        $data['mensaje'] = "Tu cuenta abierta ha sido creada y/o actualizada en <a href='www.amigos.cash'>Amigos.Cash</a>. 
+					        <br> 
+					        El monto fue de ".(($direccion_deuda>0) ? "" : "-")."$".($cantidad)." con tu amigo ".$nombredeamigo.". 
+					        <br>
+					        Puedes checar todos los detalles en : <a href='www.amigos.cash'>Amigos.Cash</a>"; 
+        
         $vista = 'emails.mensajegral';
         $email = $userA->email;
         $data['email'] = $email;
+        $nombre = $userA->first_name;
         
-        Mail::queue($vista, $data, function($message) use ($email)
+        Mail::queue($vista, $data, function($message) use ($email, $nombre)
         {
-            $message->to($email, 'Amigos Cash')->subject('Cuenta abierta');
+            $message->to($email, $nombre)->subject('Cuenta abierta');
         });
         // MAIL fin
         
+		return Redirect::to("/bienvenido");
+	}
 
-		// fulano creo una deuda de 500 pesos. Este mail es una forma de notificarte y no hace falta que hagas mas.
-		// pero si deseas confirmar que la deuda es correcta puedes hacerlo en el siguiente enlace
-		// o bien puedes registrarte en sdfsdf
-		// Si ya cuentas con una cuenta de amigos.cash y deseas vincular este email puedes hacerlo en la sección de settings
+	public function agregaracuentaabierta()
+	{
+		$direction = Input::get('direction');
+		$cuenta_id = Input::get('cuenta_id');
+		$usuarioB_id = Input::get('usuarioB');
+		$cantidad = Input::get('cantidad');
+		$concepto = Input::get('concepto');
+		$direccion_deuda = Input::get('direccion_deuda');
+
+		$userLogeado = Sentry::getUser();
+
+		// busca la cuenta abierta
+		$cuentaAbierta = Openaccount::find($cuenta_id);
+
+		// especifica el orden real de la deuda
+		if($direction == 1){
+			$userA = $cuentaAbierta->usuarioA;
+			$userB = $cuentaAbierta->usuarioB;
+		}else{
+			$userA = $cuentaAbierta->usuarioB;
+			$userB = $cuentaAbierta->usuarioA;
+			$direccion_deuda *= -1;
+		}
+
+		$detalle = new Openaccountdetail;
+		$detalle->openaccount_id = $cuentaAbierta->id;
+		$detalle->direction = $direccion_deuda;
+		$detalle->ammount = $cantidad;
+		$detalle->description = $concepto;
+		$detalle->status = "SIN CONFIRMAR";
+		$detalle->save();
+
+		$cuentaAbierta->balance += $direccion_deuda * $cantidad;
+		$cuentaAbierta->token = rand(1,9999);
+		$cuentaAbierta->save();
+
+		// MAIL USER B
+        $data=array();
+		$favor = "su";
+		if($direccion_deuda == -1){
+			$favor = "tu";
+		}       
+		$data['mensaje'] = "Hola 
+                            <br><br>
+                            Tu amigo ".$userA->first_name." que te conoce como ".$userB->first_name." ha agregado un movimiento de $".$cantidad." a ".$favor." favor en nuestro sistema <a href='www.amigos.cash'>Amigos.Cash</a>
+                            <br><br>
+                            Este mail es una forma de notificarte y no hace falta que hagas mas, pero...
+                            <br><br>
+                            Para facilitarle a tu amigo el control de esta deuda puedes confirmar que los datos son correctos en el siguiente enlace: <a href='www.amigos.cash/validacuentaabierta/".$cuentaAbierta->id."/".$cuentaAbierta->token."/".$userA->email."/".$userB->email."'>CONFIRMAR</a>
+                            <br><br>
+                            O bien puedes regstrarte en <a href='www.amigos.cash'>Amigos.Cash</a> y administrar tus propias deudas a favor y 'en contra'
+                            <br><br>
+                            Por último, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección de settings en el menú superior. 
+                            <br>
+                            Puedes vicular todas las cuentas de correo que el resto de tus amigos conozcan a tu cuenta principal.";     
+
+        $vista = 'emails.mensajegral';
+        $email = $userB->email;
+        $data['email'] = $email;
+        $data['subject'] = $subject = 'Tu amigo ' . $userA->first_name . ' tiene un mensaje para ti';
+        $nombre = $userB->first_name;
+        
+        Mail::queue($vista, $data, function($message) use ($email, $nombre, $subject)
+        {
+            $message->to($email, $nombre)->subject($subject);
+        });
+        // MAIL fin
 
 		
-		return "ola k ase";
-		return View::make('nuevacuentaabierta');
+		// MAIL USER A
+        $data=array();
+        
+        $data['mensaje'] = "Tu cuenta abierta ha sido creada y/o actualizada en <a href='www.amigos.cash'>Amigos.Cash</a>. 
+					        <br> 
+					        El monto fue de ".(($direccion_deuda>0) ? "" : "-")."$".($cantidad)." con tu amigo ".$userB->first_name.". 
+					        <br>
+					        Puedes checar todos los detalles en : <a href='www.amigos.cash'>Amigos.Cash</a>"; 
+        
+        $vista = 'emails.mensajegral';
+        $email = $userA->email;
+        $data['email'] = $email;
+        $nombre = $userA->first_name;
+        
+        Mail::queue($vista, $data, function($message) use ($email, $nombre)
+        {
+            $message->to($email, $nombre)->subject('Cuenta abierta');
+        });
+        // MAIL fin
+        
+		return Redirect::to("/bienvenido");
+	}
+
+	public function detallecuentaabierta($id){
+	
+		// busca la cuenta abierta
+		$cuentaAbierta = Openaccount::find($id);
+
+		// determina la dirección de los prestamos 
+		$userLogeado = Sentry::getUser();
+		$direction = 1;
+		$usuarioA = $userLogeado;
+		$usuarioB = $cuentaAbierta->usuarioB;
+		if($userLogeado->id == $cuentaAbierta->usuarioB->id){
+			$usuarioA = $usuarioB;
+			$usuarioB = $userLogeado;
+			$direction = -1;
+		}
+
+		return View::make('detallecuentaabierta')
+		->with('cuentaAbierta', $cuentaAbierta)
+		->with('direction', $direction)
+		->with('usuarioA', $usuarioA)
+		->with('usuarioB', $usuarioB);
 	}
 
 }

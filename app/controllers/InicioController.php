@@ -17,86 +17,155 @@ class InicioController extends BaseController {
 
 	public function inicio()
 	{
-		// TODO redirigir a bienvenido si está logeado
+		$userA = Sentry::getUser();
+		if(isset($userA->id)){
+			return Redirect::to("/bienvenido");	
+		}
 		return View::make('inicio');
 	}
 
-	public function login()
+	public function login($error = "")
 	{
-		// TODO redirigir a bienvenido si está logeado
-		return View::make('login');
+		$userA = Sentry::getUser();
+		if(isset($userA->id)){
+			return Redirect::to("/bienvenido");	
+		}
+		return View::make('login')->with('error', $error);
 	}
 
 	public function loginback(){
 		$email = Input::get('email');
 		$password = Input::get('pass');
 
-		try{
-			$user = Sentry::findUserByCredentials(array(
-	        	'email'      => $email,
-	        	'password'	 => $password,
-	    	));
-			
-			Sentry::login($user, false);
+		$rules = array(
+	        'pass' => array('required', 'alpha_num', 'min:1', 'max:50'),
+	        'email'  => array('required', 'email')
+	    );
 
-			return Redirect::to("/");
+	    $validation = Validator::make(Input::all(), $rules);
 
-		}catch(Exception $e){
-			echo $e->getMessage();
+		if(!$validation->fails()){
+			try{
+				$user = Sentry::findUserByCredentials(array(
+		        	'email'      => $email,
+		        	'password'	 => $password,
+		    	));
+				
+				Sentry::login($user, false);
+
+				return Redirect::to("/bienvenido");
+
+			}catch(Exception $e){
+				////echo $e->getMessage();
+			}
 		}
+		return Redirect::to("/login/usuario o contraseña equivocados");
+		
 	}
 
 	public function registro(){
+
+		Validator::extend('alpha_spaces', function($attribute, $value)
+		{
+			return preg_match('/^[\pL\s]+$/u', $value);
+		});
+		
 		$name = Input::get('name');
 		$email = Input::get('email');
 		$password = Input::get('pass');
 
-		// busca el email
-		try{
-			$user = Sentry::findUserByCredentials(array(
-	        	'email'      => $email,
-	    	));
-			var_dump($user);
-			// si lo encuentra y no tiene password lo actualiza
-			// si lo encuentra y tiene password manda mensaje de error de email registrado
-		}catch(Exception $e){
-			// si no lo encuentra lo registra
-			try
-			{
-			    // Let's register a user.
-			    $user = Sentry::createUser(array(
-			    	'first_name'	=> $name,
-			        'email'			=> $email,
-			        'password'		=> $password,
-			        'activated'		=> false,
-			    ));
+		$rules = array(
+	        'pass' => array('required', 'alpha_num', 'min:1', 'max:50'),
+	        'name' => array('required', 'alpha_spaces', 'min:1', 'max:50'),
+	        'email'  => array('required', 'email')
+	    );
 
-			    // Let's get the activation code
-			    $activationCode = $user->getActivationCode();
+	    $validation = Validator::make(Input::all(), $rules);
 
-			    // MAIL
-                $data=array();
-                
-                $data['mensaje'] = "Gracias por registrarte en el sistema de Amigos Cash. <br> Por favor confirma tu dirección de email haciend click en el siguiente enlace: <a href='www.amigos.cash/validacion/".$activationCode."'>Amigos.Cash/validacion/".$activationCode."</a>"; 
-                $vista = 'emails.mensajegral';
-                $data['email'] = $email;
-                
-                Mail::queue($vista, $data, function($message) use ($email)
-                {
-                    $message->to($email, 'Foto Factura')->subject('Bienvenido');
-                });
-                // MAIL fin
+	    if(!$validation->fails()){
+	    	// busca el email
+			try{
+				$user = Sentry::findUserByCredentials(array(
+		        	'email'      => $email,
+		    	));
+				// si lo encuentra y no tiene password lo actualiza
+				try{
+					$user = Sentry::findUserByCredentials(array(
+			        	'email'      => $email,
+			        	'password'      => 'odiolaluzazulaloido',
+			    	));
 
-			    // Send activation code to the user so he can activate the account
+					if(isset($user->id)){
+				    	// Let's register a user.
+					    $user->first_name = $name;
+					    $user->password = $password;
+					   	$user->save();
+
+					    // Let's get the activation code
+					    $activationCode = $user->getActivationCode();
+
+					    // MAIL
+		                $data=array();
+		                
+		                $data['mensaje'] = "Gracias por registrarte en el sistema de Amigos Cash. <br> Por favor confirma tu dirección de email haciendo click en el siguiente enlace: <a href='www.amigos.cash/validacion/".$activationCode."'>Amigos.Cash/validacion/".$activationCode."</a>"; 
+		                $vista = 'emails.mensajegral';
+		                $data['email'] = $email;
+		                $nombre = $name;
+		                
+		                Mail::queue($vista, $data, function($message) use ($email, $nombre)
+		                {
+		                    $message->to($email, $nombre)->subject('Bienvenido');
+		                });
+		                // MAIL fin
+		            }
+
+
+				}catch(Exception $e){// si lo encuentra y tiene password manda mensaje de error de email registrado
+					return Redirect::to("/login/usuario o email no disponibles");
+				}
+				
+			}catch(Exception $e){
+				// si no lo encuentra lo registra
+				try
+				{
+				    // Let's register a user.
+				    $user = Sentry::createUser(array(
+				    	'first_name'	=> $name,
+				        'email'			=> $email,
+				        'password'		=> $password,
+				        'activated'		=> false,
+				    ));
+
+				    // Let's get the activation code
+				    $activationCode = $user->getActivationCode();
+
+				    // MAIL
+	                $data=array();
+	                
+	                $data['mensaje'] = "Gracias por registrarte en el sistema de Amigos Cash. <br> Por favor confirma tu dirección de email haciendo click en el siguiente enlace: <a href='www.amigos.cash/validacion/".$activationCode."'>Amigos.Cash/validacion/".$activationCode."</a>"; 
+	                $vista = 'emails.mensajegral';
+	                $data['email'] = $email;
+	                $nombre = $name;
+	                
+	                Mail::queue($vista, $data, function($message) use ($email, $nombre)
+	                {
+	                    $message->to($email, $nombre)->subject('Bienvenido');
+	                });
+	                // MAIL fin
+
+				    // Send activation code to the user so he can activate the account
+				}
+				catch (Exception $e)
+				{
+				    echo $e->getMessage();
+				}
 			}
-			catch (Exception $e)
-			{
-			    echo $e->getMessage();
-			}
-		}
-		
-		// TODO una vista de gracias checa tu mail
-		return Redirect::to("/");
+			
+			// TODO una vista de gracias checa tu mail
+			return Redirect::to("/");
+	    }
+
+		return Redirect::to("/login/usuario o email no disponibles");
 	}
 
 	// valida el código de registro
@@ -121,7 +190,24 @@ class InicioController extends BaseController {
 	}
 
 	public function bienvenido(){
-		return View::make('bienvenido');
+		$userA = Sentry::getUser();
+		// obtiene sus cuentas abiertas
+		$cuentasAbiertasFavor = Openaccount::where("balance", ">=", 0)->where('user_idA', '=', $userA->id)->get();
+		$cuentasAbiertasContra = Openaccount::where("balance", "<", 0)->where('user_idA', '=', $userA->id)->get();
+		$cuentasAbiertasFavorInvertidas = Openaccount::where("balance", "<=", 0)->where('user_idB', '=', $userA->id)->get();
+		$cuentasAbiertasContraInvertidas = Openaccount::where("balance", ">", 0)->where('user_idB', '=', $userA->id)->get();
+		// obtiene sus cuentas con interés TODO
+		$cuentasInteresFavor = Openaccount::where('user_idA', '=', 1000)->where("balance", "<", 0)->get();
+		$cuentasInteresContra = Openaccount::where('user_idA', '=', 1000)->where("balance", "<", 0)->get();
+
+		return View::make('bienvenido')
+			->with("userA", $userA)
+			->with("cuentasAbiertasFavor", $cuentasAbiertasFavor)
+			->with("cuentasAbiertasContra", $cuentasAbiertasContra)
+			->with("cuentasAbiertasFavorInvertidas", $cuentasAbiertasFavorInvertidas)
+			->with("cuentasAbiertasContraInvertidas", $cuentasAbiertasContraInvertidas)
+			->with("cuentasInteresFavor", $cuentasInteresFavor)
+			->with("cuentasInteresContra", $cuentasInteresContra);
 	}
 
 }

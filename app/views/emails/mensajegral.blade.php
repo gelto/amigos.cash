@@ -54,7 +54,7 @@
                                 <td width="528" style="line-height:0px;font-size:0px;">
                                     <table width="528" border="0" align="center" cellpadding="0" cellspacing="0">
                                         <tr>
-                                            <td width="528" height="40" align="left" style="font-family:Helvetica,Arial,Sans-serif;font-size:16px;line-height:18px;color:#0dbff2;"><strong>Hola</strong></td>
+                                            <td width="528" height="40" align="left" style="font-family:Helvetica,Arial,Sans-serif;font-size:16px;line-height:18px;color:#0dbff2;"><strong>Amigos.Cash - La red social del pr&eacute;stamo entre amigos.</strong></td>
                                         </tr>
                                         <tr>
                                             <td width="528" height="10" style="line-height:0px;font-size:0px;">

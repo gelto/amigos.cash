@@ -67,13 +67,13 @@
 
                                                 Hola 
                                                 <br><br>
-                                                Tu amigo Germ&aacute;n Nava que te conoce como SENSEI ha registrado una deuda de $300 a su favor en nuestro sistema Amigos.Cash
+                                                Tu amigo Germ&aacute;n Nava que te conoce como SENSEI ha registrado una deuda de $300 a su favor en nuestro sistema <a href='www.amigos.cash'>Amigos.Cash</a>
                                                 <br><br>
                                                 Este mail es una forma de notificarte y no hace falta que hagas mas, pero...
                                                 <br><br>
                                                 Para facilitarle a tu amigo el control de esta deuda puedes confirmar que los datos son correctos en el siguiente enlace: <a href='www.amigos.cash/validacuentaabierta/'>CONFIRMAR</a>
                                                 <br><br>
-                                                O bien puedes regstrarte en <a href='www.amigos.cash'>Amigos.Cash</a> y administrar tus propias deudas a favor y "en contra"
+                                                O bien puedes regstrarte en <a href='www.amigos.cash'>Amigos.Cash</a> y administrar tus propias deudas a favor y 'en contra'
                                                 <br><br>
                                                 Por último, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección de settings en el menú superior. 
                                                 <br>
