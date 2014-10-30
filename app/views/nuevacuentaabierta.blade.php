@@ -12,17 +12,17 @@
             </div>
             <div class="row">
                 <div class="small-12 columns">
-                    <input type="text" name='nombredeamigo' placeholder="¿Cómo le dices a tu amigo?" required>
+                    <input type="text" name='nombredeamigo' placeholder="¿Cómo le dices a tu amigo?" value="" required>
                 </div>
             </div>
             <div class="row">
                 <div class="small-12 columns">
-                    <input type="email" name='emaildeamigo' placeholder="¿qué email conoces de tu amigo?" required>
+                    <input type="email" name='emaildeamigo' placeholder="¿qué email conoces de tu amigo?" value="" required>
                 </div>
             </div>
             <div class="row">
                 <div class="small-12 columns">
-                    <input type="number" name='cantidad' placeholder="Cantidad en pesos" required>
+                    <input type="number" name='cantidad' placeholder="Cantidad en pesos" value="" required>
                 </div>
             </div>
             <div class="row">

@@ -46,6 +46,12 @@ Route::get('/logout', function()
 Route::post('/registro', array('before' => 'csrf', 'uses' => 'InicioController@registro'));
 Route::get('/validacion/{codigo?}', array('uses' => 'InicioController@validacion'));
 
+Route::post('/recuperarback', array('before' => 'csrf', 'uses'=>'InicioController@recuperarback'));
+Route::get('/recuperarpassword/{id}/{resetcode}/{error?}', array('uses' => 'InicioController@recuperarpassword'));
+Route::post('/finderecuperarpassword', array('before' => 'csrf', 'uses'=>'InicioController@finderecuperarpassword'));
+
+
+
 // *************** //
 // ** LOGEO FIN ** //
 // *************** //

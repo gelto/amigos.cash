@@ -69,6 +69,97 @@ class InicioController extends BaseController {
 		
 	}
 
+	public function recuperarback(){
+
+		$email = Input::get('email');
+
+		$rules = array(
+	        'email'  => array('required', 'email')
+	    );
+
+	    $validation = Validator::make(Input::all(), $rules);
+
+		if(!$validation->fails()){
+			try{
+				$user = Sentry::findUserByLogin($email);
+				
+				if(isset($user->activated)){
+					if($user->activated){
+						// Let's get the activation code
+					    $resetCode = $user->getResetPasswordCode();
+
+					    // MAIL
+		                $data=array();
+		                
+		                $data['mensaje'] = "Gracias por ser parte del sistema de Amigos Cash. <br> Por favor confirma tu deseo de recuperar contraseña haciendo click en el siguiente enlace: <a href='www.amigos.cash/recuperarpassword/".$user->id."/".$resetCode."'>Amigos.Cash/recuperarpassword/".$resetCode."</a> <br> Si crees que este email es un error por facor has caso omiso del mensaje"; 
+		                $vista = 'emails.mensajegral';
+		                $data['email'] = $email;
+		                $nombre = $name = $user->first_name;
+		                
+		                Mail::queue($vista, $data, function($message) use ($email, $nombre)
+		                {
+		                    $message->to($email, $nombre)->subject('Recuperación de password');
+		                });
+		                // MAIL fin
+					}
+				}
+
+			}catch(Exception $e){
+				echo $e->getMessage();
+			}
+		}
+
+		return View::make('mailenviado');
+		
+	}
+
+	public function recuperarpassword($id="", $resetcode="", $error = "")
+	{
+		$userA = Sentry::getUser();
+		if(isset($userA->id)){
+			return Redirect::to("/bienvenido");	
+		}
+
+
+		return View::make('cambiapassword')->with('error', $error)->with('resetcode', $resetcode)->with('id', $id);
+	}
+
+	public function finderecuperarpassword(){
+		$id = Input::get('id');
+		$password = Input::get('password');
+		$resetcode = Input::get('resetcode');
+
+		$rules = array(
+	        'password' => array('required', 'alpha_num', 'min:1', 'max:50'),
+	        'resetcode' => array('required', 'alpha_num', 'min:1', 'max:500'),
+	        'id' => array('required', 'numeric'),
+	    );
+
+	    $validation = Validator::make(Input::all(), $rules);
+
+	    if(!$validation->fails()){
+	    	try
+			{
+			    // Find the user using the user id
+			    $user = Sentry::findUserById($id);
+
+			    // Check if the reset password code is valid
+			    if ($user->checkResetPasswordCode($resetcode))
+			    {
+			        // Attempt to reset the user password
+			        if ($user->attemptResetPassword($resetcode, $password))
+			        {
+			            Sentry::login($user, false);
+			        }
+			    }
+			}catch(Exception $e){
+
+			}
+	    }
+
+	    return Redirect::to("/");
+	}
+
 	public function registro(){
 
 		Validator::extend('alpha_spaces', function($attribute, $value)

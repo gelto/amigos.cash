@@ -128,6 +128,7 @@ class PersonasController extends BaseController {
 	}
 
 	public function cambiamicuenta(){
+
 		Validator::extend('alpha_spaces', function($attribute, $value)
 		{
 			return preg_match('/^[\pL\s]+$/u', $value);
@@ -170,6 +171,18 @@ class PersonasController extends BaseController {
 	    		}
 	    	}
 	    		
+	    	if(isset($_FILES["photo"]["tmp_name"])){
+
+	    		$nombreDeImagen = $userId . Rand(0,9999) . $_FILES["photo"]["name"];
+		    	$target_dir = "uploads/";
+				$target_dir = $target_dir . basename( $nombreDeImagen);
+				$uploadOk=1;
+
+				if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_dir)) {
+				    $userL->image = $target_dir;
+				}
+				
+		    }
 	    	$userL->save();
 	    }
 

@@ -43,7 +43,7 @@
       </div>
       <div class="row">
           <div class="small-12 columns">
-              <input type="number" name='cantidad' placeholder="Cantidad en pesos" required>
+              <input type="number" name='cantidad' placeholder="Cantidad en pesos" value="" required>
           </div>
       </div>
       <div class="row">

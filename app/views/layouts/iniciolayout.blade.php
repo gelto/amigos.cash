@@ -12,7 +12,7 @@
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
         <li class="name">
-          <h1><a href="#">Amigos Cash - La red social del préstamos entre amigos</a></h1>
+          <h1><a href="/">Amigos Cash - La red social del préstamos entre amigos</a></h1>
         </li>
          <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -31,6 +31,7 @@
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="{{Config::get('miconfig.publicvar')}}statics/foundation/js/foundation.min.js"></script>
+    <script src="{{Config::get('miconfig.publicvar')}}statics/js/general.js"></script>
     <script>
       $(document).foundation();
     </script>

@@ -5,8 +5,22 @@
     <div class="large-1 columns">&nbsp;</div>
     <div class="large-4 columns">
         <div class="panel">
-            <form action="/cambiamicuenta" method='post'>
+            <form action="/cambiamicuenta" method='post' enctype="multipart/form-data">
                 {{ Form::token() }}
+                <div class="row">
+                    <div class="small-12 columns">
+                        @if($userL->image != null)
+                        <img src="{{Config::get('miconfig.publicvar')}}{{$userL->image}}">
+                        @else
+                        <img src="{{Config::get('miconfig.publicvar')}}imagenesperfiles/placeholder.jpg">
+                        @endif
+                        <label>
+                            Foto:
+                            <input type="file" name="photo">
+                        </label>
+                    </div>
+                </div>
+                
                 <input type="hidden" name='user_id' value="{{$userL->id}}">
                 <div class="row">
                     <div class="small-12 columns">
@@ -28,7 +42,7 @@
                     <div class="small-12 columns">
                         <label>
                             Nuevo password:
-                            <input type="password" name='password' placeholder="Nuevo password" >
+                            <input type="password" name='password' placeholder="Nuevo password" value="" >
                         </label>
                     </div>
                 </div>
