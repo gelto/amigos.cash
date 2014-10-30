@@ -92,10 +92,9 @@ class InicioController extends BaseController {
 				try{
 					$user = Sentry::findUserByCredentials(array(
 			        	'email'      => $email,
-			        	'password'      => 'odiolaluzazulaloido',
 			    	));
 
-					if(isset($user->id)){
+					if(isset($user->id) && $user->activated == 0){
 				    	// Let's register a user.
 					    $user->first_name = $name;
 					    $user->password = $password;

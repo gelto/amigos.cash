@@ -1,23 +1,5 @@
-@extends('layouts.iniciolayout')
+@extends('layouts.iniciolayoutin')
 @section('content')
-
-<nav class="top-bar" data-topbar role="navigation">
-  <ul class="title-area">
-    <li class="name">
-      <h1><a href="#">Amigos Cash - La red social del préstamos entre amigos</a></h1>
-    </li>
-     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-  </ul>
-  <section class="top-bar-section">
-    <!-- Right Nav Section -->
-    <ul class="right">
-      <li class="active"><a href="logout">Logut</a></li>
-    </ul>
-  </section>
-</nav>
-
-<br>
 
 <div class="row">
   <!-- ecuentas sin interes -->

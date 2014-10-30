@@ -115,15 +115,15 @@ class CuentasController extends BaseController {
                                 <br><br>
                                 Tu amigo ".$userA->first_name." que te conoce como ".$nombredeamigo." ha registrado una deuda de $".$cantidad." a ".$favor." favor en nuestro sistema <a href='www.amigos.cash'>Amigos.Cash</a>
                                 <br><br>
-                                Este mail es una forma de notificarte y no hace falta que hagas mas, pero...
+                                Este mail es una forma de notificarte y no hace falta que hagas mas, sin embargo...
                                 <br><br>
-                                Para facilitarle a tu amigo el control de esta deuda puedes confirmar que los datos son correctos en el siguiente enlace: <a href='www.amigos.cash/validacuentaabierta/".$nuevaCuenta->id."/".$nuevaCuenta->token."/".$userA->email."/".$userB->email."'>CONFIRMAR</a>
+                                Puedes revisar los detalles en : <a href='www.amigos.cash/detallecuentaabiertaout/".$nuevaCuenta->id."'>DETALLES</a>
                                 <br><br>
-                                O bien puedes regstrarte en <a href='www.amigos.cash'>Amigos.Cash</a> y administrar tus propias deudas a favor y 'en contra'
+                                En <a href='www.amigos.cash'>Amigos.Cash</a> puedes administrar tus propias deudas a favor y 'en contra'
                                 <br><br>
-                                Por último, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección de settings en el menú superior. 
+                                Por &uacute;ltimo, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección 'Mi cuenta' en el menú superior. 
                                 <br>
-                                Puedes vicular todas las cuentas de correo que el resto de tus amigos conozcan a tu cuenta principal.";     
+                                Puedes registrar todas las cuentas de correo que el resto de tus amigos conozcan a tu cuenta principal.";     
 
             $vista = 'emails.mensajegral';
             $email = $userB->email;
@@ -146,7 +146,7 @@ class CuentasController extends BaseController {
 					        <br> 
 					        El monto fue de ".(($direccion_deuda>0) ? "" : "-")."$".($cantidad)." con tu amigo ".$nombredeamigo.". 
 					        <br>
-					        Puedes checar todos los detalles en : <a href='www.amigos.cash'>Amigos.Cash</a>"; 
+					        Puedes checar todos los detalles <a href='www.amigos.cash/detallecuentaabierta/".$nuevaCuenta->id."'>Aqu&iacute;</a>"; 
         
         $vista = 'emails.mensajegral';
         $email = $userA->email;
@@ -206,17 +206,19 @@ class CuentasController extends BaseController {
 		}       
 		$data['mensaje'] = "Hola 
                             <br><br>
-                            Tu amigo ".$userA->first_name." que te conoce como ".$userB->first_name." ha agregado un movimiento de $".$cantidad." a ".$favor." favor en nuestro sistema <a href='www.amigos.cash'>Amigos.Cash</a>
+                            Tu amigo ".$userA->first_name." que te conoce como ".$userB->first_name." ha registrado una deuda de $".$cantidad." a ".$favor." favor en nuestro sistema <a href='www.amigos.cash'>Amigos.Cash</a>
                             <br><br>
-                            Este mail es una forma de notificarte y no hace falta que hagas mas, pero...
+                            Este mail es una forma de notificarte y no hace falta que hagas mas, sin embargo...
                             <br><br>
-                            Para facilitarle a tu amigo el control de esta deuda puedes confirmar que los datos son correctos en el siguiente enlace: <a href='www.amigos.cash/validacuentaabierta/".$cuentaAbierta->id."/".$cuentaAbierta->token."/".$userA->email."/".$userB->email."'>CONFIRMAR</a>
+                            Puedes revisar los detalles en : <a href='www.amigos.cash/detallecuentaabiertaout/".$cuentaAbierta->id."'>DETALLES</a>
                             <br><br>
-                            O bien puedes regstrarte en <a href='www.amigos.cash'>Amigos.Cash</a> y administrar tus propias deudas a favor y 'en contra'
+                            En <a href='www.amigos.cash'>Amigos.Cash</a> puedes administrar tus propias deudas a favor y 'en contra'
                             <br><br>
-                            Por último, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección de settings en el menú superior. 
+                            Por &uacute;ltimo, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección 'Mi cuenta' en el menú superior. 
                             <br>
-                            Puedes vicular todas las cuentas de correo que el resto de tus amigos conozcan a tu cuenta principal.";     
+                            Puedes registrar todas las cuentas de correo que el resto de tus amigos conozcan a tu cuenta principal.";     
+
+
 
         $vista = 'emails.mensajegral';
         $email = $userB->email;
@@ -238,7 +240,7 @@ class CuentasController extends BaseController {
 					        <br> 
 					        El monto fue de ".(($direccion_deuda>0) ? "" : "-")."$".($cantidad)." con tu amigo ".$userB->first_name.". 
 					        <br>
-					        Puedes checar todos los detalles en : <a href='www.amigos.cash'>Amigos.Cash</a>"; 
+					        Puedes checar todos los detalles <a href='www.amigos.cash/detallecuentaabiertaout/".$cuentaAbierta->id."'>Aqu&iacute;</a>"; 
         
         $vista = 'emails.mensajegral';
         $email = $userA->email;

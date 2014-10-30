@@ -60,6 +60,25 @@ Route::post('agregaracuentaabierta', array('before' => 'logeado', 'uses'=>'Cuent
 // ** CUENTAS FIN ** //
 // ***************** //
 
+// ************ //
+// ** AMIGOS ** //
+// ************ //
+Route::get('amigos', array('before' => 'logeado', 'uses'=>'AmigosController@lista'));
+Route::post('cambiaamigo', array('before' => 'csrf', 'before' => 'logeado', 'uses'=>'AmigosController@cambiaamigo'));
+// **************** //
+// ** AMIGOS FIN ** //
+// **************** //
+
+// *************** //
+// ** MI CUENTA ** //
+// *************** //
+Route::get('micuenta', array('before' => 'logeado', 'uses'=>'PersonasController@micuenta'));
+Route::get('vinculacion/{token}/{id}/{email}', array('before' => 'logeado', 'uses'=>'PersonasController@vinculacion'));
+Route::post('agregaemail', array('before' => 'csrf', 'before' => 'logeado', 'uses'=>'PersonasController@agregaemail'));
+// ******************* //
+// ** MI CUENTA FIN ** //
+// ******************* //
+
 // ***************** //
 // ** EMAIL TESTS ** //
 // ***************** //
