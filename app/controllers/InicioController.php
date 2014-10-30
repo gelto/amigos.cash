@@ -53,6 +53,12 @@ class InicioController extends BaseController {
 				
 				Sentry::login($user, false);
 
+				// REDIRECCION
+				$redireccion = Session::get('redireccion');
+				if(isset($redireccion)){
+					Session::forget('redireccion');
+					return Redirect::to($redireccion);
+				}
 				return Redirect::to("/bienvenido");
 
 			}catch(Exception $e){

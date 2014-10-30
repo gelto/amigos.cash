@@ -22,6 +22,10 @@ Route::filter('logeado', function()
 {
     if ( ! Sentry::check())
     {
+        if(isset($_SERVER['REQUEST_URI'])){
+            Session::put('redireccion', $_SERVER['REQUEST_URI']);
+        }
+        
         return Redirect::to('/');
     }
 });
