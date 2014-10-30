@@ -176,6 +176,12 @@ class InicioController extends BaseController {
 			// si lo encuentra lo activa
 			$user->attemptActivation($codigo);
 
+			// le crea un email alternativo
+			$alternativo = new Alternativeemail;
+			$alternativo->user_id = $user->id;
+			$alternativo->email = $user->email;
+			$alternativo->save();
+
 			// lo logea
 			Sentry::login($user, false);
 

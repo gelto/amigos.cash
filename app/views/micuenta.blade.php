@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="small-12 columns">
                         <label>
-                            Nombre:
+                            Email principal:
                             <input type="email" name='email' placeholder="Email" value="{{$userL->email}}" >
                         </label>
                     </div>
@@ -32,6 +32,16 @@
                         </label>
                     </div>
                 </div>
+                <div class="row">
+                <div class="small-12 columns">
+                    @if($error == "Lo sentimos pero no puedes usar un email que no hayas dado de alta (y validado) como email alternativo primero")
+                    <div data-alert class="alert-box alert round">
+                      {{$error}}
+                      <a href="#" class="close">&times;</a>
+                    </div>
+                    @endif
+                </div>
+            </div>
                 <div class="row">
                     <div class="small-2 columns">&nbsp;</div>
                     <div class="small-8 columns">
@@ -64,6 +74,14 @@
                             <input type="email" name='email' placeholder="Email" value="{{$userL->email}}" >
                         </label>
                     </div>
+                </div>
+                <div class="small-12 columns">
+                    @if($error == "Por favor provee un email válido")
+                    <div data-alert class="alert-box alert round">
+                      {{$error}}
+                      <a href="#" class="close">&times;</a>
+                    </div>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="small-2 columns">&nbsp;</div>

@@ -72,9 +72,10 @@ Route::post('cambiaamigo', array('before' => 'csrf', 'before' => 'logeado', 'use
 // *************** //
 // ** MI CUENTA ** //
 // *************** //
-Route::get('micuenta', array('before' => 'logeado', 'uses'=>'PersonasController@micuenta'));
+Route::get('micuenta/{error?}', array('before' => 'logeado', 'uses'=>'PersonasController@micuenta'));
 Route::get('vinculacion/{token}/{id}/{email}', array('before' => 'logeado', 'uses'=>'PersonasController@vinculacion'));
 Route::post('agregaemail', array('before' => 'csrf', 'before' => 'logeado', 'uses'=>'PersonasController@agregaemail'));
+Route::post('cambiamicuenta', array('before' => 'csrf', 'before' => 'logeado', 'uses'=>'PersonasController@cambiamicuenta'));
 // ******************* //
 // ** MI CUENTA FIN ** //
 // ******************* //

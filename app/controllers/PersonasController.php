@@ -2,13 +2,13 @@
 
 class PersonasController extends BaseController {
 
-	public function micuenta()
+	public function micuenta($error="")
 	{
 		$userL = Sentry::getUser();
 
 		$alternativeemails = Alternativeemail::where('user_id', '=',$userL->id)->get();
 
-		return View::make('micuenta')->with('userL', $userL)->with('alternativeemails', $alternativeemails);
+		return View::make('micuenta')->with('userL', $userL)->with('alternativeemails', $alternativeemails)->with('error', $error);
 	}
 
 	public function agregaemail()
@@ -52,6 +52,8 @@ class PersonasController extends BaseController {
                 $message->to($email, $nombre)->subject('Nuevo email');
             });
             // MAIL fin
+	    }else{
+	    	return Redirect::to('/micuenta/Por favor provee un email válido');
 	    }
 	}
 
@@ -61,7 +63,7 @@ class PersonasController extends BaseController {
 
 		try{
 			
-			// si el id es el mismo que logeado continua
+			// si el token está chido
 			if($userL->activation_code == $token){
 
 				// adjudica el nuevo email al usuairo logeado
@@ -123,6 +125,55 @@ class PersonasController extends BaseController {
 		}catch(Exception $e){
 			echo $e->getMessage();
 		}
+	}
+
+	public function cambiamicuenta(){
+		Validator::extend('alpha_spaces', function($attribute, $value)
+		{
+			return preg_match('/^[\pL\s]+$/u', $value);
+		});
+
+		$userL = Sentry::getUser();
+
+		$name = Input::get('name');
+		$password = Input::get('password');
+		$email = Input::get('email');
+		$userId = Input::get('user_id');
+
+		$rules = array(
+			'user_id' => array('required', 'numeric'),
+	        'email'  => array('email'),
+	        'pass' => array('alpha_num', 'min:1', 'max:50'),
+	        'name' => array('alpha_spaces', 'min:1', 'max:50')
+	    );
+
+	    $validation = Validator::make(Input::all(), $rules);
+
+	    if(!$validation->fails() && $userL->id == $userId){
+	    	if($name!="")
+	    		$userL->first_name = $name;
+	    	if($password!="")
+	    		$userL->password = $password;
+	    	if($email!=""){
+	    		// busca el email entre sus alternativos
+	    		$alternativos = Alternativeemail::where('user_id', '=', $userL->id)->get();
+	    		$encontrado = false;
+	    		foreach($alternativos as $alternativo){
+	    			if($alternativo->email == $email){
+	    				$encontrado = true;
+	    			}
+	    		}
+	    		if($encontrado){
+	    			$userL->email = $email;
+	    		}else{
+	    			return Redirect::to('/micuenta/Lo sentimos pero no puedes usar un email que no hayas dado de alta (y validado) como email alternativo primero');
+	    		}
+	    	}
+	    		
+	    	$userL->save();
+	    }
+
+	    return Redirect::to('/micuenta');
 	}
 
 }
