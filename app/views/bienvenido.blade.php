@@ -61,7 +61,7 @@
             ?>
             <div class="row">
               <div class="small-12 columns">
-                + ${{-1*$ca->balance}}
+                + $@if($ca->balance != 0) {{-1*$ca->balance}} @else {{$ca->balance}} @endif 
               </div>
             </div>
             <div class="row">
@@ -96,7 +96,7 @@
             ?>
             <div class="row">
               <div class="small-12 columns">
-                - ${{-1*$ca->balance}}
+                @if($ca->balance != 0) - @endif ${{$ca->balance/-1.00}}
               </div>
             </div>
             <div class="row">
@@ -130,7 +130,7 @@
             ?>
             <div class="row">
               <div class="small-12 columns">
-                - ${{$ca->balance}}
+                @if($ca->balance != 0) - @endif ${{$ca->balance}}
               </div>
             </div>
             <div class="row">
@@ -150,7 +150,7 @@
     </div>
     <div class="row">
       <div class="small-12 column">
-        <a href="/nuevacuentaconinteres" class="button expand">Nueva cuenta con interés</a>
+        <!--a href="/nuevacuentaconinteres" class="button expand">Nueva cuenta con interés</a-->
       </div>
     </div>
   </div>

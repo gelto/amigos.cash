@@ -55,6 +55,8 @@ class PersonasController extends BaseController {
 	    }else{
 	    	return Redirect::to('/micuenta/Por favor provee un email válido');
 	    }
+
+	    return View::make('mailenviado');
 	}
 
 	public function vinculacion($token, $id, $email)
@@ -125,6 +127,8 @@ class PersonasController extends BaseController {
 		}catch(Exception $e){
 			echo $e->getMessage();
 		}
+
+		return Redirect::to('/micuenta');
 	}
 
 	public function cambiamicuenta(){

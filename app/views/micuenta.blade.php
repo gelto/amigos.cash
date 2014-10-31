@@ -69,14 +69,12 @@
     </div>
     <div class="large-2 columns">&nbsp;</div>
     <div class="large-4 columns">
-        Emails alternativos: {{count($alternativeemails)}}
-        @foreach($alternativeemails as $alte)
-        <div class="row">
-            <div class="small-12 columns">
-                <p>{{$alte->email}}</p>
-            </div>
-        </div>
-        @endforeach
+        <h3>Emails registrados: {{count($alternativeemails)}}</h3>
+        <ul>
+            @foreach($alternativeemails as $alte)
+            <li>{{$alte->email}}</li>
+            @endforeach
+        </ul>
         <div class="panel">
             <form action="/agregaemail" method='post'>
                 {{ Form::token() }}
@@ -85,6 +83,7 @@
                     <div class="small-12 columns">
                         <label>
                             Agrega un nuevo email por el cual quieras/puedas ser encontrado:
+                            <br>
                             <input type="email" name='email' placeholder="Email" value="{{$userL->email}}" >
                         </label>
                     </div>

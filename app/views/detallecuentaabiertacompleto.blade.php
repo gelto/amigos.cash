@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-      @foreach($cuentaAbierta->detalles5 as $detalle)
+      @foreach($cuentaAbierta->detallesFull as $detalle)
         <tr>
           <td><?php echo ($detalle->direction*$direction > 0) ? "$".$detalle->ammount : ""; ?></td>
           <td>{{substr($detalle->created_at, 0, -9)}} {{$detalle->description}}</td>
@@ -33,7 +33,6 @@
       @endforeach
       </tbody>
     </table>
-    <a href="/detallecuentaabiertacompleto/{{$cuentaAbierta->id}}">Ver historial completo</a>
   </div>
   <!-- forma para agregar detalles -->
   <div class="large-6 columns">
@@ -61,16 +60,6 @@
               <label>¿Quién le debe a quién?</label>
               <input type="radio" name="direccion_deuda" value="1" ><label for="pokemonRed">Yo presté</label>
               <input type="radio" name="direccion_deuda" value="-1" ><label for="pokemonBlue">Me prestaron</label>
-          </div>
-      </div>
-      <div class="row">
-          <div class="small-12 columns">
-              @if($error != "")
-              <div data-alert class="alert-box alert round">
-                {{$error}}
-                <a href="#" class="close">&times;</a>
-              </div>
-              @endif
           </div>
       </div>
       <div class="row">

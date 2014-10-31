@@ -2,7 +2,7 @@
 @section('content')
     
 <div class="row">
-    <div class="large-1 columns">&nbsp;</div>
+    <div class="large-1 columns"><h3>Cambia los datos con los que puedes encontrar a tus amigos</h3></div>
     <div class="large-4 columns">
         @foreach($cuentasCreadas as $cc)
         <div class="panel">
@@ -15,17 +15,26 @@
                 <input type="hidden" name='amigo_id' value="{{$cc->usuarioB->id}}">
                 <div class="row">
                     <div class="small-12 columns">
-                        <h5>{{$cc->usuarioB->first_name}}</h5>
+                        <label>
+                            Nombre:
+                            <h5>{{$cc->usuarioB->first_name}}</h5>
+                        </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <input type="text" name='nickname' placeholder="Apodo" value="{{$nickname[0]->nickname}}" required>
+                        <label>
+                            Apodo:
+                            <input type="text" name='nickname' placeholder="Apodo" value="{{$nickname[0]->nickname}}" required>
+                        </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <input type="email" name='email' placeholder="Email" value="{{$cc->usuarioB->email}}" required>
+                        <label>
+                            Email:
+                            <input type="email" name='email' placeholder="Email" value="{{$cc->usuarioB->email}}" required>
+                        </label>
                     </div>
                 </div>
                 <div class="row">
@@ -57,17 +66,26 @@
                 <input type="hidden" name='amigo_id' value="{{$ci->usuarioA->id}}">
                 <div class="row">
                     <div class="small-12 columns">
-                        <h5>{{$ci->usuarioA->first_name}}</h5>
+                        <label>
+                            Nombre:
+                            <h5>{{$ci->usuarioA->first_name}}</h5>
+                        </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <input type="text" name='nickname' placeholder="Apodo" value="{{$nicknameo}}" required>
+                        <label>
+                            Apodo:
+                            <input type="text" name='nickname' placeholder="Apodo" value="{{$nicknameo}}" required>
+                        </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <input type="email" name='email' placeholder="Email" value="{{$ci->usuarioA->email}}" required>
+                        <label>
+                            Email:
+                            <input type="email" name='email' placeholder="Email" value="{{$ci->usuarioA->email}}" required>
+                        </label>
                     </div>
                 </div>
                 <div class="row">

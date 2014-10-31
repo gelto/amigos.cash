@@ -9,10 +9,10 @@
         <tr>
           <th width="80">{{$usuarioA->first_name}} Puso</th>
           <th width="300">
-            @if($cuentaAbierta->balance > 0) 
+            @if($cuentaAbierta->balance >= 0) 
               Al momento {{$usuarioB->first_name}} le debe ${{$cuentaAbierta->balance}} a {{$usuarioA->first_name}}
             @else
-              Al momento {{$usuarioA->first_name}} le debe ${{$cuentaAbierta->balance*(-1)}} a {{$usuarioB->first_name}}
+              Al momento {{$usuarioA->first_name}} le debe ${{$cuentaAbierta->balance*(-1.00)}} a {{$usuarioB->first_name}}
             @endif
             </th>
           <th width="80">{{$usuarioB->first_name}} Puso</th>
@@ -28,6 +28,7 @@
       @endforeach
       </tbody>
     </table>
+    <a href="/login">Ver historial completo</a>
   </div>
 </div>
     	

@@ -15,4 +15,9 @@ class Openaccount extends Eloquent {
     {
         return $this->hasMany('Openaccountdetail')->orderBy('id', 'desc')->take(5);
     }
+
+    public function detallesFull()
+    {
+        return $this->hasMany('Openaccountdetail')->orderBy('id', 'desc');
+    }
 }
