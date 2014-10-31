@@ -26,7 +26,7 @@ Route::filter('logeado', function()
             Session::put('redireccion', $_SERVER['REQUEST_URI']);
         }
         
-        return Redirect::to('/');
+        return Redirect::to('/login');
     }
 });
 
@@ -60,10 +60,11 @@ Route::post('/finderecuperarpassword', array('before' => 'csrf', 'uses'=>'Inicio
 // ** CUENTAS ** //
 // ************* //
 
-Route::get('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabierta'));
+Route::get('nuevacuentaabierta/{error?}', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabierta'));
 Route::post('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabiertaback'));
 
 Route::get('detallecuentaabierta/{id}', array('before' => 'logeado', 'uses'=>'CuentasController@detallecuentaabierta'));
+Route::get('detallecuentaabiertaout/{id}', array('uses'=>'CuentasController@detallecuentaabiertaout'));
 Route::post('agregaracuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@agregaracuentaabierta'));
 
 // ***************** //

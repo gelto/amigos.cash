@@ -15,9 +15,9 @@ class CuentasController extends BaseController {
 	|
 	*/
 
-	public function nuevacuentaabierta()
+	public function nuevacuentaabierta($error="")
 	{
-		return View::make('nuevacuentaabierta');
+		return View::make('nuevacuentaabierta')->with('error', $error);
 	}
 
 	public function nuevacuentaabiertaback()
@@ -39,16 +39,24 @@ class CuentasController extends BaseController {
 			$alternativeB = Alternativeemail::where('email', "=", $emaildeamigo)->get();
 			if(isset($alternativeB[0])){
 				$userB = $alternativeB[0]->usuario();	
-			}
-			
+			}	
 		}
 		// si lo encuentra 
 		if(isset($userB->id)){
 			// busca una cuenta abierta entre los 2 usuarios
 			$cuentaAbierta = Openaccount::where("user_idA", "=", $userA->id)->where("user_idB", "=", $userB->id)->get();
+			if(!isset($cuentaAbierta[0])){
+				$cuentaAbierta = Openaccount::where("user_idA", "=", $userB->id)->where("user_idB", "=", $userA->id)->get();
+				if(isset($cuentaAbierta[0])){
+					$userAux = $userA;
+					$userA = $userB;
+					$userB = $userA;
+					$direccion_deuda *= -1;
+				}
+			}
 
 			// si la encuentra agrega un detalle en la cuenta abierta y actualiza balance
-			if(isset($cuentaAbierta[0]->id)){
+			if(isset($cuentaAbierta[0])){
 				$detalle = new Openaccountdetail;
 				$detalle->openaccount_id = $cuentaAbierta[0]->id;
 				$detalle->direction = $direccion_deuda;
@@ -60,11 +68,63 @@ class CuentasController extends BaseController {
 				$cuentaAbierta[0]->balance += $direccion_deuda * $cantidad;
 				$cuentaAbierta[0]->token = rand(1,9999);
 				$cuentaAbierta[0]->save();
-				return "a ver??";
+				$nuevaCuenta = $cuentaAbierta[0];
 			}else{ // si no, crea una nueva cuenta, un nuevo detalle y un nuevo nickname
-				return "aquí no debería entrar";
+				$nickname = new Alternativenickname;
+			    $nickname->user_id = $userB->id;
+			    $nickname->user_id_origen = $userA->id;
+			    $nickname->nickname = $nombredeamigo;
+			    $nickname->status = "ACTIVO";
+			    $nickname->save();
+
+			    $nuevaCuenta = new Openaccount;
+				$nuevaCuenta->user_idA = $userA->id;
+				$nuevaCuenta->user_idB = $userB->id;
+				$nuevaCuenta->balance = $direccion_deuda * $cantidad;
+				$nuevaCuenta->token = rand(1,9999);
+				$nuevaCuenta->status = "SIN CONFIRMAR";
+				$nuevaCuenta->save();
+
+				$detalle = new Openaccountdetail;
+				$detalle->openaccount_id = $nuevaCuenta->id;
+				$detalle->direction = $direccion_deuda;
+				$detalle->ammount = $cantidad;
+				$detalle->description = $concepto;
+				$detalle->status = "SIN CONFIRMAR";
+				$detalle->save();
+
+				// MAIL USER B
+	            $data=array();
+				$favor = "su";
+				if($direccion_deuda == -1){
+					$favor = "tu";
+				}       
+				$data['mensaje'] = "Hola 
+	                                <br><br>
+	                                Tu amigo ".$userA->first_name." que te conoce como ".$nombredeamigo." ha registrado una deuda de $".$cantidad." a ".$favor." favor en nuestro sistema <a href='www.amigos.cash'>Amigos.Cash</a>
+	                                <br><br>
+	                                Este mail es una forma de notificarte y no hace falta que hagas mas, sin embargo...
+	                                <br><br>
+	                                Puedes revisar los detalles en : <a href='www.amigos.cash/detallecuentaabiertaout/".$nuevaCuenta->id."'>DETALLES</a>
+	                                <br><br>
+	                                En <a href='www.amigos.cash'>Amigos.Cash</a> puedes administrar tus propias deudas a favor y 'en contra'
+	                                <br><br>
+	                                Por &uacute;ltimo, si ya eres parte de nuestro portal y deseas vicular este email a tu cuenta principal, puedes hacerlo en la sección 'Mi cuenta' en el menú superior. 
+	                                <br>
+	                                Puedes registrar todas las cuentas de correo que el resto de tus amigos conozcan a tu cuenta principal.";     
+
+	            $vista = 'emails.mensajegral';
+	            $email = $userB->email;
+	            $data['email'] = $email;
+	            $data['subject'] = $subject = 'Tu amigo ' . $userA->first_name . ' tiene un mensaje para ti';
+	            $nombre = $nombredeamigo;
+	            
+	            Mail::queue($vista, $data, function($message) use ($email, $nombre, $subject)
+	            {
+	                $message->to($email, $nombre)->subject($subject);
+	            });
+	            // MAIL fin
 			}
-			return "si lo encontró";
 		}else{ 
 			// si no, crea un usuario amigo con password odiolaluzazulaloido y un nickname e email alternativo
 			$userB = Sentry::createUser(array(
@@ -158,7 +218,6 @@ class CuentasController extends BaseController {
             $message->to($email, $nombre)->subject('Cuenta abierta');
         });
         // MAIL fin
-        
 		return Redirect::to("/bienvenido");
 	}
 
@@ -277,6 +336,18 @@ class CuentasController extends BaseController {
 		->with('direction', $direction)
 		->with('usuarioA', $usuarioA)
 		->with('usuarioB', $usuarioB);
+	}
+
+	public function detallecuentaabiertaout($id){
+	
+		// busca la cuenta abierta
+		$cuentaAbierta = Openaccount::find($id);
+
+		return View::make('detallecuentaabiertaout')
+		->with('cuentaAbierta', $cuentaAbierta)
+		->with('direction', 1)
+		->with('usuarioA', $cuentaAbierta->usuarioA)
+		->with('usuarioB', $cuentaAbierta->usuarioB);
 	}
 
 }

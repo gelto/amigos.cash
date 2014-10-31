@@ -39,7 +39,12 @@
             </div>
             <div class="row">
                 <div class="small-12 columns">
-                    <div class='textoLogin'>&nbsp;<?php echo isset($_GET["error"]) ? "Usuario y/o Password incorrectos" :""; ?></div>
+                    @if($error != "")
+                    <div data-alert class="alert-box alert round">
+                      {{$error}}
+                      <a href="#" class="close">&times;</a>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="row">
