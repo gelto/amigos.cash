@@ -1,8 +1,13 @@
 @extends('layouts.iniciolayoutin')
 @section('content')
+
+<div class="row">
+    <div class="large-1 columns">&nbsp;</div>
+    <div class="small-11 columns"><h3>Cambia los datos con los que puedes encontrar a tus amigos</h3></div>
+</div>
     
 <div class="row">
-    <div class="large-1 columns"><h3>Cambia los datos con los que puedes encontrar a tus amigos</h3></div>
+    <div class="large-1 columns">&nbsp;</div>
     <div class="large-4 columns">
         @foreach($cuentasCreadas as $cc)
         <div class="panel">
