@@ -23,6 +23,7 @@
           <li><a href="/">Cuentas</a></li>
           <li><a href="/amigos">Amigos</a></li>
           <li><a href="/micuenta">Mi cuenta</a></li>
+          <li><a href="http://bit.ly/1vf1nfV">Gana $100 con piggo.mx</a></li>
           <li class="active"><a href="/logout">Logut</a></li>
         </ul>
       </section>

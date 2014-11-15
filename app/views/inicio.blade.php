@@ -14,7 +14,7 @@
                 <p><a href="/login">Lleva cuentas abiertas</a><br />Controla ese debo-me-deben del día a día con tu amigo que a veces presta (dinero) y a veces pide (dinero)</p>
             </div>
             <div class="large-4 columns">
-                <p><a href="/login">Cuentas con intereses</a><br />Si ya conoces bien a tu amigo y necesita dinero, préstale con un interés mucho mas bajo que el banco (1% mensual). Nosotros nos encargamos de recordarle</p>
+                <p><a href="http://bit.ly/1vf1nfV">Gana $100 con piggo.mx</a><br />Da el primer paso, ahorra e invierte para lo que quieres y #ponlefecha a tus metas.<br>&nbsp;<br>Una maestría, Un coche, Un viaje, La universidad de mis hijos, Una casa, Un negocio, Mi primer millón</p>
             </div>        
           </div>
         </div>

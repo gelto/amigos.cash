@@ -25,7 +25,7 @@ class PersonasController extends BaseController {
 
 	    $validation = Validator::make(Input::all(), $rules);
 
-	    if(!$validation->fails() && $userL->id == $userId){
+	    if(!$validation->fails() && $userL->id == $userId && $userL->email != $email){
 
 	    	$alternativeEmailArr = Alternativeemail::where('email', '=', $email)->get();
 	    	if(isset($alternativeEmailArr[0])){
@@ -66,7 +66,7 @@ class PersonasController extends BaseController {
 		try{
 			
 			// si el token está chido
-			if($userL->activation_code == $token){
+			if($userL->activation_code == $token && $userL->id != $id){
 
 				// adjudica el nuevo email al usuairo logeado
 				$alternativeEmailArr = Alternativeemail::where('id', '=', $id)->where('email', '=', $email)->get();
@@ -135,7 +135,7 @@ class PersonasController extends BaseController {
 
 		Validator::extend('alpha_spaces', function($attribute, $value)
 		{
-			return preg_match('/^[;):)\@\#\%\=\!\¡\¿\?\+\-\*\/\,\$\.\pL\s]+$/u', $value);
+			return preg_match('/^[;):)\@\#\%\=\!\¡\¿\?\+\-\*\/\,\$\.\pL\s0-9]+$/u', $value);
 		});
 
 		$userL = Sentry::getUser();

@@ -24,7 +24,7 @@ class CuentasController extends BaseController {
 	{
 		Validator::extend('alpha_spaces', function($attribute, $value)
 		{
-			return preg_match('/^[;):)\@\#\%\=\!\¡\¿\?\+\-\*\/\,\$\.\pL\s]+$/u', $value);
+			return preg_match('/^[;):)\@\#\%\=\!\¡\¿\?\+\-\*\/\,\$\.\pL\s0-9]+$/u', $value);
 		});
 
 		$nombredeamigo = Input::get('nombredeamigo');
@@ -250,7 +250,7 @@ class CuentasController extends BaseController {
 
 		Validator::extend('alpha_spaces', function($attribute, $value)
 		{
-			return preg_match('/^[;):)\@\#\%\=\!\¡\¿\?\+\-\*\/\,\$\.\pL\s]+$/u', $value);
+			return preg_match('/^[;):)\@\#\%\=\!\¡\¿\?\+\-\*\/\,\$\.\pL\s0-9]+$/u', $value);
 		});
 
 		$direction = Input::get('direction');
