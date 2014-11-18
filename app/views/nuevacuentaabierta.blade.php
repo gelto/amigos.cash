@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="small-12 columns">
                     <label>¿Quién le debe a quién?</label>
-                    <input type="radio" name="direccion_deuda" value="1" ><label for="pokemonRed">Yo presté</label>
+                    <input type="radio" name="direccion_deuda" value="1" ><label for="pokemonRed" checked>Yo presté</label>
                     <input type="radio" name="direccion_deuda" value="-1" ><label for="pokemonBlue">Me prestaron</label>
                 </div>
             </div>

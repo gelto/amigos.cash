@@ -301,7 +301,7 @@ class CuentasController extends BaseController {
 			// MAIL USER B
 	        $data=array();
 			$favor = "su";
-			if($direccion_deuda == -1){
+			if($direccion_deuda * $direction == -1){
 				$favor = "tu";
 			}       
 			$data['mensaje'] = "Hola 

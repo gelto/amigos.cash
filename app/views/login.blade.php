@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="small-2 columns">&nbsp;</div>
                 <div class="small-8 columns">
-                    <button class="large round button expand" type="submit">Entar</button>
+                    <button class="large round button expand" type="submit">Entrar</button>
                 </div>
                 <div class="small-2 columns">&nbsp;</div>
             </div>
