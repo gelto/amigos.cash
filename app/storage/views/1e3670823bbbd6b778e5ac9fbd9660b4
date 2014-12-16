@@ -1,0 +1,13 @@
+<?php $__env->startSection('content'); ?>
+    
+    <div class="row">
+      <div class="small-12 columns">
+        <div class="panel">
+          <h3>Estamos muy felices que hayas decidido probar Amigos Cash</h3>
+          <p>Un email ha sido enviado con insctrucciones para continuar. Si no puedes encontrar el correo por favor revisa en tu carpeta de spam o correo no deseado ;)</p>
+        </div>
+      </div>
+    </div>
+    	
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.iniciolayout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

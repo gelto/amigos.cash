@@ -1,0 +1,167 @@
+<?php $__env->startSection('content'); ?>
+
+<div class="row">
+  <!-- ecuentas sin interes -->
+  <div class="large-5 column">
+    <h3>Cuentas abiertas: <?php echo count($cuentasAbiertasFavor) + count($cuentasAbiertasContra) + count($cuentasAbiertasFavorInvertidas) + count($cuentasAbiertasContraInvertidas); ?></h3>
+      <?php foreach($cuentasAbiertasFavor as $ca): ?>
+      <div class="panel">
+        <div class="row">
+          <div class="small-4 column">
+            <a href="detallecuentaabierta/<?php echo $ca->id; ?>">
+              <?php if($ca->usuarioB->image != null): ?>
+              <img src="<?php echo Config::get('miconfig.publicvar'); ?><?php echo $ca->usuarioB->image; ?>">
+              <?php else: ?>
+              <img src="<?php echo Config::get('miconfig.publicvar'); ?>imagenesperfiles/placeholder.jpg">
+              <?php endif; ?>
+            </a>
+          </div>
+          <div class="small-8 column">
+            <?php
+            $apodoStr = "";
+            $apodo = Alternativenickname::where('user_id', '=', $ca->usuarioB->id)->where('user_id_origen', '=', $userA->id)->get();
+            if(isset($apodo[0])){
+              $apodoStr = "(" . $apodo[0]->nickname . ")";
+            }
+            ?>
+            <div class="row">
+              <div class="small-12 columns">
+                + $<?php echo $ca->balance; ?>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 columns">
+                <p><?php echo $ca->usuarioB->first_name; ?> <?php echo $apodoStr; ?></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+      <?php foreach($cuentasAbiertasFavorInvertidas as $ca): ?>
+      <div class="panel">
+        <div class="row">
+          <div class="small-4 column">
+            <a href="detallecuentaabierta/<?php echo $ca->id; ?>">
+              <?php if($ca->usuarioA->image != null): ?>
+              <img src="<?php echo Config::get('miconfig.publicvar'); ?><?php echo $ca->usuarioA->image; ?>">
+              <?php else: ?>
+              <img src="<?php echo Config::get('miconfig.publicvar'); ?>imagenesperfiles/placeholder.jpg">
+              <?php endif; ?>
+            </a>
+          </div>
+          <div class="small-8 column">
+            <?php
+            $apodoStr = "";
+            $apodo = Alternativenickname::where('user_id', '=', $ca->usuarioA->id)->where('user_id_origen', '=', $ca->usuarioB->id)->get();
+            if(isset($apodo[0])){
+              $apodoStr = "(" . $apodo[0]->nickname . ")";
+            }
+            ?>
+            <div class="row">
+              <div class="small-12 columns">
+                + $<?php if($ca->balance != 0): ?> <?php echo -1*$ca->balance; ?> <?php else: ?> <?php echo $ca->balance; ?> <?php endif; ?> 
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 columns">
+                <p><?php echo $ca->usuarioA->first_name; ?> <?php echo $apodoStr; ?></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    
+      <?php foreach($cuentasAbiertasContra as $ca): ?>
+      <div class="panel">
+        <div class="row">
+          <div class="small-4 column">
+            <a href="detallecuentaabierta/<?php echo $ca->id; ?>">
+              <?php if($ca->usuarioB->image != null): ?>
+              <img src="<?php echo Config::get('miconfig.publicvar'); ?><?php echo $ca->usuarioB->image; ?>">
+              <?php else: ?>
+              <img src="<?php echo Config::get('miconfig.publicvar'); ?>imagenesperfiles/placeholder.jpg">
+              <?php endif; ?>
+            </a>
+          </div>
+          <div class="small-8 column">
+            <?php
+            $apodoStr = "";
+            $apodo = Alternativenickname::where('user_id', '=', $ca->usuarioB->id)->where('user_id_origen', '=', $ca->usuarioA->id)->get();
+            if(isset($apodo[0])){
+              $apodoStr = "(" . $apodo[0]->nickname . ")";
+            }
+            ?>
+            <div class="row">
+              <div class="small-12 columns">
+                <?php if($ca->balance != 0): ?> - <?php endif; ?> $<?php echo $ca->balance/-1.00; ?>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 columns">
+                <p><?php echo $ca->usuarioB->first_name; ?> <?php echo $apodoStr; ?></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+      <?php foreach($cuentasAbiertasContraInvertidas as $ca): ?>
+      <div class="panel">
+        <div class="row">
+          <div class="small-4 column">
+            <a href="detallecuentaabierta/<?php echo $ca->id; ?>">
+              <?php if($ca->usuarioA->image != null): ?>
+              <img src="<?php echo Config::get('miconfig.publicvar'); ?><?php echo $ca->usuarioA->image; ?>">
+              <?php else: ?>
+              <img src="<?php echo Config::get('miconfig.publicvar'); ?>imagenesperfiles/placeholder.jpg">
+              <?php endif; ?>
+            </a>
+          </div>
+          <div class="small-8 column">
+            <?php
+            $apodoStr = "";
+            $apodo = Alternativenickname::where('user_id', '=', $ca->usuarioA->id)->where('user_id_origen', '=', $ca->usuarioB->id)->get();
+            if(isset($apodo[0])){
+              $apodoStr = "(" . $apodo[0]->nickname . ")";
+            }
+            ?>
+            <div class="row">
+              <div class="small-12 columns">
+                <?php if($ca->balance != 0): ?> - <?php endif; ?> $<?php echo $ca->balance; ?>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 columns">
+                <p><?php echo $ca->usuarioA->first_name; ?> <?php echo $apodoStr; ?></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    
+    <div class="row">
+      <div class="small-12 column">
+        <a href="/nuevacuentaabierta" class="button expand">Nueva cuenta abierta</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 column">
+        <!--a href="/nuevacuentaconinteres" class="button expand">Nueva cuenta con interés</a-->
+      </div>
+    </div>
+  </div>
+  <!-- espacio entre columnas -->
+  <div class="large-7 column">
+    &nbsp;
+  </div>
+
+</div>
+    	
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.iniciolayoutin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

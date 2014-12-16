@@ -420,4 +420,9 @@ class CuentasController extends BaseController {
 		->with('usuarioB', $cuentaAbierta->usuarioB);
 	}
 
+	public function buscaamigos(){
+		return View::make('buscaamigos');
+	}
+
+
 }

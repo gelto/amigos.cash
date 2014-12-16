@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', array('uses'=>'InicioController@inicio'));
 Route::get('/bienvenido', array('before' => 'logeado', 'uses'=>'InicioController@bienvenido'));
 
@@ -62,6 +63,7 @@ Route::post('/finderecuperarpassword', array('before' => 'csrf', 'uses'=>'Inicio
 
 Route::get('nuevacuentaabierta/{error?}', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabierta'));
 Route::post('nuevacuentaabierta', array('before' => 'logeado', 'uses'=>'CuentasController@nuevacuentaabiertaback'));
+Route::get('buscaamigos', array('before' => 'logeado', 'uses'=>'CuentasController@buscaamigos'));
 
 Route::get('detallecuentaabierta/{id}/{error?}', array('before' => 'logeado', 'uses'=>'CuentasController@detallecuentaabierta'));
 Route::get('detallecuentaabiertacompleto/{id}', array('before' => 'logeado', 'uses'=>'CuentasController@detallecuentaabiertacompleto'));
@@ -104,3 +106,14 @@ Route::get("correo", function(){
 // ********************* //
 // ** EMAIL TESTS FIN ** //
 // ********************* //
+
+
+// ********************** //
+// ** pruebas facebook ** //
+// ********************** //
+Route::get('facebook', function(){
+    return View::make('facebook');
+});
+// ************************** //
+// ** pruebas facebook fin ** //
+// ************************** //

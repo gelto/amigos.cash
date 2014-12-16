@@ -1,0 +1,37 @@
+<?php $__env->startSection('content'); ?>
+
+<div class="row">
+  <!-- detalles -->
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th width="80"><?php echo $usuarioA->first_name; ?> Puso</th>
+          <th width="300">
+            <?php if($cuentaAbierta->balance >= 0): ?> 
+              Al momento <?php echo $usuarioB->first_name; ?> le debe $<?php echo $cuentaAbierta->balance; ?> a <?php echo $usuarioA->first_name; ?>
+
+            <?php else: ?>
+              Al momento <?php echo $usuarioA->first_name; ?> le debe $<?php echo $cuentaAbierta->balance*(-1.00); ?> a <?php echo $usuarioB->first_name; ?>
+
+            <?php endif; ?>
+            </th>
+          <th width="80"><?php echo $usuarioB->first_name; ?> Puso</th>
+        </tr>
+      </thead>
+      <tbody>
+      <?php foreach($cuentaAbierta->detalles5 as $detalle): ?>
+        <tr>
+          <td><?php echo ($detalle->direction > 0) ? "$".$detalle->ammount : ""; ?></td>
+          <td><?php echo substr($detalle->created_at, 0, -9); ?> <?php echo $detalle->description; ?></td>
+          <td><?php echo ($detalle->direction < 0) ? "$".$detalle->ammount : ""; ?></td>
+        </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+    <a href="/login">Ver historial completo</a>
+  </div>
+</div>
+    	
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.iniciolayoutin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
